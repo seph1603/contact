@@ -5,7 +5,8 @@ const INITIAL_STATE = {
 	name: '',
 	email: '',
 	subject: '',
-	body: ''
+	body: '',
+	status: 'IDLE'
 };
 
 const reducer = (state, action) => {
@@ -13,6 +14,10 @@ const reducer = (state, action) => {
 		case 'updateFieldValue':
 			return { ...state, [action.field]:
 				action.value };
+		case 'updateStatus':
+			return { ...state, status: action.status};
+
+		case 'reset':
 		default:
 			return INITIAL_STATE
 	}
@@ -21,6 +26,8 @@ const reducer = (state, action) => {
 const Form = () => {
 	const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 	
+	const setStatus = status => dispatch({ type:  'updateStatus', status });
+
 	const updateFieldValue = field => event => {
 		dispatch({
 			type:  'updateFieldValue',
@@ -32,10 +39,28 @@ const Form = () => {
 	const handleSubmit = event => {
 		event.preventDefault();
 		//TODO actually send the message
+		setStatus('PENDING');
+		setTimeout(() => {
+			setStatus('SUCCESS');
+		}, 3000);
 		console.log(state);
 	}
+
+	if(state.status === 'SUCCESS') {
+		return (
+			<div>
+				<p className={styles.success}>
+					Message sent!
+				</p>
+				<button type="reset" onClick={() => dispatch({type: 'reset'}) } className={`${styles.button} ${styles.reset}`}>Go back</button>
+			</div>
+		);
+	}
+
 	return (
-		<form className={styles.form} onSubmit={handleSubmit}>
+		<>
+		{state.status === 'ERROR' && (<p className={styles.error}>Something went wrong. Please try again</p>)}
+		<form className={`${styles.form} ${state.status === 'PENDING' && styles.pending}`} onSubmit={handleSubmit}>
 			<label className={styles.label}>
 				Name
 				<input
@@ -60,6 +85,7 @@ const Form = () => {
 			</label>
 			<button className={styles.button}>Send</button>
 		</form>
+		</>
 	);
 }
 

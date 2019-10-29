@@ -47,3 +47,67 @@
 	color: darkblue;
 	box-shadow:  0px 3px 6px 0px #d2d7da;
 }
+
+.success, 
+.error {
+display: block;
+border-radius: .25rem;
+margin: .75rem auto 0;
+max-width:  500px;
+text-align: center;
+}
+
+.form.pending {
+	position: relative;
+}
+
+.form.pending::before {
+	background: white;
+	border-radius: .25rem;
+	content: '';
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: .85;
+}
+
+.form.pending::after {
+	background: radial-gradient(rgba(0,50,255, 0), rgba(0,50,255, .8));
+	border-radius: 50%;
+	content: '';
+	height: 6rem;
+	width: 6rem;
+	position: absolute;
+	left: calc(50% - 3rem);
+	top: calc(50% - 3rem);
+	animation: loading 1s infinite ease-out; 
+}
+
+@keyframes loading {
+	from {
+		opacity: 1;
+		transform: scale(.001);
+	}	
+	to {
+		opacity: 0;
+		transform: scale(1);
+	}		
+}
+
+.success {
+	background-color: rgba(0, 255, 0, .1);
+	border: 1px solid green;
+	padding: 2rem;
+}
+
+.error {
+	background-color: rgba(255, 0, 0, .1);
+	border: 1px solid red;
+	padding: 2rem;
+}
+
+.reset {
+	margin: 2rem  auto 0;
+}
