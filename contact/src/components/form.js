@@ -29,6 +29,7 @@ const Form = () => {
     const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
     const setStatus = status => dispatch({type: 'updateStatus', status});
 
+    //Curry function
     const updateFieldValue = field => event => {
         dispatch({
             type: 'updateFieldValue',
