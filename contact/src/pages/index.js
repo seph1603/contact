@@ -4,7 +4,7 @@ import Form from '../components/form';
 
 export default () => (
 	<>
-	<h1>Send a Message</h1>
+	<h1>Send Me a Note</h1>
 		<Form />
 	</>
 );
